@@ -13,8 +13,10 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 
 /**
+ * BluetoothInterface handles the connection to individual nodes
  *
  * @author Brendan Russell BrendanLeeRussell72@gmail.com
+ * @version 1.0
  */
 public class BluetoothInterface {
 
@@ -92,7 +94,7 @@ public class BluetoothInterface {
         InputStream is = streamConnection.openInputStream();
 
         PrintWriter pWriter = new PrintWriter(new OutputStreamWriter(os));
-        pWriter.write("ready\n\n");
+        pWriter.write("ready\n\n"); //Super secret password
         pWriter.flush();
         pWriter.close();
         Thread.sleep(200);
