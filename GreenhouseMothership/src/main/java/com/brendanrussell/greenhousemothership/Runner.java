@@ -1,7 +1,6 @@
 /**
  * Copyright (c) 2018 Brendan Russell BrendanLeeRussell72@gmail.com
  */
-
 package com.brendanrussell.greenhousemothership;
 
 import java.util.concurrent.Executors;
@@ -10,16 +9,17 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * This is the main class and will create a thread to run the program on a loop.
- * 
+ *
  * @author Brendan Russell BrendanLeeRussell72@gmail.com
  * @version 1.0
  */
 public class Runner {
+
     private static int runCounter;
 
     /**
      * The main() method calls the run method
-     * 
+     *
      * @param args no arguments necessary
      */
     public static void main(String[] args) {
@@ -34,16 +34,16 @@ public class Runner {
     public static void run() {
 
         /**
-         * adds one to the amount of times this program has been run
-         * since last reboot
+         * adds one to the amount of times this program has been run since last
+         * reboot
          */
-        runCounter++; 
-        
+        runCounter++;
+
         //create MotherShip object
         MotherShip m = new MotherShip();
         //Creates executor service to run MotherShip thread
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        
+
         try {
             //Schedules the executor to run Mothership every 570 seconds(9.5min)
             executor.scheduleAtFixedRate(m, 0L, 570L, TimeUnit.SECONDS);

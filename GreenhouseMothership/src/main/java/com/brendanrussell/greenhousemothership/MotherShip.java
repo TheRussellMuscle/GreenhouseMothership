@@ -1,7 +1,6 @@
 /**
  * Copyright (c) 2018 Brendan Russell BrendanLeeRussell72@gmail.com
  */
-
 package com.brendanrussell.greenhousemothership;
 
 import java.util.ArrayList;
@@ -16,12 +15,12 @@ import org.apache.http.impl.client.HttpClientBuilder;
  * This program is the main runnable thread of the Greenhouse MotherShip.
  * MotherShip's task is to collect data from each of the nodes, format it into
  * JSON format, and send it to the server for storage and analytics.
- * 
+ *
  * @author Brendan Russell BrendanLeeRussell72@gmail.com
  * @version 1.0
  */
 public class MotherShip implements Runnable {
-    
+
     /**
      * Declare nodes here, nodes only require a string URL, instructions for
      * creating a node URL will be included above their initialization below.
@@ -29,7 +28,7 @@ public class MotherShip implements Runnable {
     private final String nodeOneURL;
     private final String nodeTwoURL;
     private final String nodeThreeURL;
-    
+
     //Each Sensor should be declared here and be of type Sensor
     private final BluetoothInterface nodeOneTemp;
     private final BluetoothInterface nodeTwoTemp;
@@ -40,8 +39,7 @@ public class MotherShip implements Runnable {
      */
     public MotherShip() {
         /**
-         * Node URLs are initialized
-         * to create a Node URL copy:
+         * Node URLs are initialized to create a Node URL copy:
          * "btspp://<YOUR BT MAC>:1;authenticate=true;encrypt=true;master=false"
          * and replace <YOUR BT MAC> with the MAC address of your Bluetooth
          * module minus the dashes or spaces Refrence the code below to double
@@ -55,26 +53,25 @@ public class MotherShip implements Runnable {
                 + "encrypt=true;master=false";
 
         /**
-         * Here sensors are initialized
-         * To initialize a sensor include the URL of its Node, its full id,
-         * and its type
+         * Here sensors are initialized To initialize a sensor include the URL
+         * of its Node, its full id, and its type
          */
-        nodeOneTemp 
+        nodeOneTemp
                 = new BluetoothInterface(nodeOneURL, "a01-01", "temperature");
-        nodeTwoTemp 
+        nodeTwoTemp
                 = new BluetoothInterface(nodeTwoURL, "a02-01", "temperature");
-        nodeThreeTemp 
+        nodeThreeTemp
                 = new BluetoothInterface(nodeThreeURL, "a03-01", "temperature");
 
     }
-    
+
     /**
      * Functions below written for individual nodes should be fixed so that only
      * one function is needed
      */
-
     /**
      * Retrieves the data from nodeOne and returns it as a string array
+     *
      * @return All data from node one
      */
     private String nodeOneData() {
@@ -100,6 +97,7 @@ public class MotherShip implements Runnable {
 
     /**
      * Retrieves the data from nodeTwo and returns it as a string array
+     *
      * @return All data from node two
      */
     private String nodeTwoData() {
@@ -124,6 +122,7 @@ public class MotherShip implements Runnable {
 
     /**
      * Retrieves the data from nodeThree and returns it as a string array
+     *
      * @return All data from node three
      */
     private String nodeThreeData() {
@@ -163,7 +162,7 @@ public class MotherShip implements Runnable {
 
     /**
      * Sends data to the server
-     * 
+     *
      * @param jsonString a string formatted and ready to be sent to the server
      */
     private void sendData(String jsonString) {
@@ -201,9 +200,8 @@ public class MotherShip implements Runnable {
     }
 
     /**
-     * The main loop of the program
-     * Gathers data from nodes, makes sure data is valid, calls methods to
-     * send data to server
+     * The main loop of the program Gathers data from nodes, makes sure data is
+     * valid, calls methods to send data to server
      */
     @Override
     public void run() {
