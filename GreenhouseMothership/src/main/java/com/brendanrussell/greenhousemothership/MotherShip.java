@@ -22,8 +22,10 @@ import org.apache.http.impl.client.HttpClientBuilder;
  */
 public class MotherShip implements Runnable {
     
-    //Declare nodes here, nodes only require a string URL, instructions for 
-    //creating a node URL will be included above their initialization below.
+    /**
+     * Declare nodes here, nodes only require a string URL, instructions for
+     * creating a node URL will be included above their initialization below.
+     */
     private final String nodeOneURL;
     private final String nodeTwoURL;
     private final String nodeThreeURL;
@@ -37,12 +39,14 @@ public class MotherShip implements Runnable {
      * Initializes the nodes and sensors
      */
     public MotherShip() {
-        //Node URLs are initialized
-        //to create a Node URL copy
-        //"btspp://<YOUR BT MAC>:1;authenticate=true;encrypt=true;master=false"
-        //and replace <YOUR BT MAC> with the MAC address of your Bluetooth
-        //module minus the dashes or spaces. Refrence the code below to double
-        //check your work
+        /**
+         * Node URLs are initialized
+         * to create a Node URL copy:
+         * "btspp://<YOUR BT MAC>:1;authenticate=true;encrypt=true;master=false"
+         * and replace <YOUR BT MAC> with the MAC address of your Bluetooth
+         * module minus the dashes or spaces Refrence the code below to double
+         * check your work
+         */
         nodeOneURL = "btspp://000666D0E48B:1;authenticate=true;"
                 + "encrypt=true;master=false";
         nodeTwoURL = "btspp://000666D0E8C4:1;authenticate=true;"
@@ -50,9 +54,11 @@ public class MotherShip implements Runnable {
         nodeThreeURL = "btspp://000666D0E433:1;authenticate=true;"
                 + "encrypt=true;master=false";
 
-        //Here sensors are initialized
-        //To initialize a sensor include the URL of its Node, its full id,
-        //and its type
+        /**
+         * Here sensors are initialized
+         * To initialize a sensor include the URL of its Node, its full id,
+         * and its type
+         */
         nodeOneTemp 
                 = new BluetoothInterface(nodeOneURL, "a01-01", "temperature");
         nodeTwoTemp 
@@ -61,6 +67,11 @@ public class MotherShip implements Runnable {
                 = new BluetoothInterface(nodeThreeURL, "a03-01", "temperature");
 
     }
+    
+    /**
+     * Functions below written for individual nodes should be fixed so that only
+     * one function is needed
+     */
 
     /**
      * Retrieves the data from nodeOne and returns it as a string array
@@ -87,6 +98,10 @@ public class MotherShip implements Runnable {
         return temperature;
     }
 
+    /**
+     * Retrieves the data from nodeTwo and returns it as a string array
+     * @return All data from node two
+     */
     private String nodeTwoData() {
         String nodeTwoTemp = this.nodeTwoTemp.getTemp();
         int counter = 0;
@@ -107,6 +122,10 @@ public class MotherShip implements Runnable {
         return nodeTwoTemp;
     }
 
+    /**
+     * Retrieves the data from nodeThree and returns it as a string array
+     * @return All data from node three
+     */
     private String nodeThreeData() {
         String nodeThreeTemp = this.nodeThreeTemp.getTemp();
         int counter = 0;
@@ -128,9 +147,9 @@ public class MotherShip implements Runnable {
     }
 
     /**
-     * Creates the data and returns json
+     * Creates the data and returns a json string
      *
-     * @return
+     * @return a json formatted string ready to be sent to the server
      */
     private String formatData(ArrayList<BluetoothInterface> nodes) {
 
@@ -142,6 +161,11 @@ public class MotherShip implements Runnable {
 
     }
 
+    /**
+     * Sends data to the server
+     * 
+     * @param jsonString a string formatted and ready to be sent to the server
+     */
     private void sendData(String jsonString) {
         System.out.println(jsonString);
         int timeout = 20;
@@ -176,6 +200,11 @@ public class MotherShip implements Runnable {
 
     }
 
+    /**
+     * The main loop of the program
+     * Gathers data from nodes, makes sure data is valid, calls methods to
+     * send data to server
+     */
     @Override
     public void run() {
         //Display results

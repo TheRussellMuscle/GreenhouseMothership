@@ -1,28 +1,8 @@
-package com.brendanrussell.greenhousemothership;
-
-/*
- * The MIT License
- *
- * Copyright 2018 Brendan Russell BrendanLeeRussell72@gmail.com.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+/**
+ * Copyright (c) 2018 Brendan Russell BrendanLeeRussell72@gmail.com
  */
+
+package com.brendanrussell.greenhousemothership;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -43,42 +23,63 @@ public class BluetoothInterface {
     private String type;
     private String data;
     
-
     /**
-     *
-     * @param URL
+     * Creates a BluetoothInterface Object
+     * @param URL a string containing the Bluetooth URL necessary for connection
+     * @param id a String containing the ID of the sensor
+     * @param type a String containing the type of the sensor
      */
     public BluetoothInterface(String URL, String id, String type) {
         NodeURL = URL;
         this.id = id;
         this.type = type;
         
-
     }
     
+    /**
+     * A public method for getting the temperature from a sensor
+     * @return returns a string containing the temperature
+     */
     public String getTemp() {
         String temp;
         try {
             temp = go();
         } catch (Exception ex) {
-            //Logger.getLogger(Mothership.class.getName()).log(Level.SEVERE, null, ex);
             temp = "Connection Fail";
         }
         data = temp;
         return temp;
     }
     
+    /**
+     * Public method for retrieving the ID string
+     * @return the ID string
+     */
     public String getId() {
         return id;
     }
     
+    /**
+     * Public method for retrieving the Type string
+     * @return the Type string
+     */
     public String getType() {
         return type;
     }
     
+    /**
+     * Public method for retrieving the Data string
+     * @return the Data string
+     */
     public String getData() {
         return data;
     }
+    
+    /**
+     * Method connects to node over Bluetooth and retrieves its data
+     * @return the data from the node
+     * @throws Exception 
+     */
     private String go() throws Exception {
         StreamConnection streamConnection = (StreamConnection) Connector.open(NodeURL);
         OutputStream os = streamConnection.openOutputStream();

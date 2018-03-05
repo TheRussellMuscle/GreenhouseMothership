@@ -18,10 +18,16 @@ public class JSONGenerator {
 
     private String json = "";
 
+    /**
+     * Constructor for JSONGenerator, takes an array of nodes
+     * @param nodes an arrayList of BluetoothIterface Objects
+     */
     public JSONGenerator(ArrayList<BluetoothInterface> nodes) {
 
-        //HashMap<String, String> allSensors,
-        //ArrayList<String> sensorIds, HashMap<String, String> dataMap
+        /**
+         * HashMap<String, String> allSensors,
+         * ArrayList<String> sensorIds, HashMap<String, String> dataMap
+         */
         setJSON("{\r\n"
                 + "	\"date\": \"");
         setJSON(getJSON() + getCurrentTime());
@@ -55,6 +61,10 @@ public class JSONGenerator {
 
     }
 
+    /**
+     * gets the current time
+     * @return the current time and date in format "yyyy-MM-dd'T'HH:mm:ss-05:00"
+     */
     private String getCurrentTime() {
         String currentTime;
         // Collects and sets the current Time
@@ -65,18 +75,30 @@ public class JSONGenerator {
         return currentTime;
     }
 
+    /**
+     * ###################################################
+     * code below this point is terrible should be changed asap
+     */
+    
+    /**
+     * Returns the current JSON string
+     * @return the JSON string
+     */
     private String getJSON() {
         return json;
     }
 
+    /**
+     * Sets the current JSON string
+     * @param json the JSON string to be replace the old one
+     */
     private void setJSON(String json) {
         this.json = json;
     }
 
     /**
-     * getting the json string
-     *
-     * @return
+     * Public access to JSON string
+     * @return the current JSON string
      */
     public String getJSONAsString() {
         return json;

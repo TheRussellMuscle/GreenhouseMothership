@@ -5,7 +5,8 @@
 package com.brendanrussell.greenhousemothership;
 
 /**
- *
+ * Abstract class defining data variables needed by all sensors
+ * 
  * @author Brendan Russell BrendanLeeRussell72@gmail.com
  * @version 1.0
  */

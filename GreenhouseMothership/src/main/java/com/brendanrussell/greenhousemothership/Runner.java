@@ -19,6 +19,7 @@ public class Runner {
 
     /**
      * The main() method calls the run method
+     * 
      * @param args no arguments necessary
      */
     public static void main(String[] args) {
@@ -31,24 +32,31 @@ public class Runner {
      * all functions of the program when called.
      */
     public static void run() {
-        //adds one to the amount of times this program has been run
-        //since last reboot
+
+        /**
+         * adds one to the amount of times this program has been run
+         * since last reboot
+         */
         runCounter++; 
         
-        
-        MotherShip m = new MotherShip(); //create MotherShip object
+        //create MotherShip object
+        MotherShip m = new MotherShip();
         //Creates executor service to run MotherShip thread
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         
         try {
             //Schedules the executor to run Mothership every 570 seconds(9.5min)
             executor.scheduleAtFixedRate(m, 0L, 570L, TimeUnit.SECONDS);
-            //Tells runner thread to sleep for roughly 27 billion years
-            //afterwards the program will shut down
+            /**
+             * Tells runner thread to sleep for roughly 27 billion years
+             * afterwards the program will shut down
+             */
             Thread.sleep(TimeUnit.DAYS.toMillis(9999999999999L));
         } catch (InterruptedException ex) {
-            //If the process is interrupted the program will attempt to restart
-            //itself a maximum of 10 times
+            /**
+             * If the process is interrupted the program will attempt to restart
+             * itself a maximum of 10 times
+             */
             if (runCounter <= 10) {
                 run();
             }
