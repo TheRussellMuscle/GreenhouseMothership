@@ -9,6 +9,7 @@ Imagine a world where crops are grown without the expensive, laborious care and 
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
+* [Arduino](https://www.arduino.cc/) - Microcontroller Platform
 
 ## Authors
 
