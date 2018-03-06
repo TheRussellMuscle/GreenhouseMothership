@@ -24,4 +24,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * Thanks to Thomas Rokicki - [CraftingGamerTom](https://github.com/CraftingGamerTom) for coding the server, website, and serverside data analytics which made this project possible.
 * Thanks to Quinsigamond Community College, Phi Theta Kappa, Bonnie Coleman, and the rest of the greenhouse team for giving me a greenhouse, hardware, and funding to make this project possible.
 * Thanks to my advisor, Professor Hao Loi, for giving me the opportinity to present my findings at the UMass Undergraduate Research Confrence.
-* Thanks to Michelle Loven, for helping me write my abstract and giving me support throughout this project's development.
+* Thanks to Michelle Loven, for helping me write my abstract, create hardware, and for giving me support throughout this project's development.
