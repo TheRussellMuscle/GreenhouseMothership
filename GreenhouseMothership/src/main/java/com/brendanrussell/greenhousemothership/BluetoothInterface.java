@@ -21,65 +21,29 @@ import javax.microedition.io.StreamConnection;
 public class BluetoothInterface {
 
     private String NodeURL;
-    private String id;
-    private String type;
     private String data;
 
     /**
      * Creates a BluetoothInterface Object
      *
      * @param URL a string containing the Bluetooth URL necessary for connection
-     * @param id a String containing the ID of the sensor
-     * @param type a String containing the type of the sensor
      */
-    public BluetoothInterface(String URL, String id, String type) {
-        NodeURL = URL;
-        this.id = id;
-        this.type = type;
-
+    public BluetoothInterface(String URL) {
+        this.NodeURL = URL;
     }
 
     /**
-     * A public method for getting the temperature from a sensor
+     * A public method for getting the data from a node
      *
-     * @return returns a string containing the temperature
-     */
-    public String getTemp() {
-        String temp;
-        try {
-            temp = go();
-        } catch (Exception ex) {
-            temp = "Connection Fail";
-        }
-        data = temp;
-        return temp;
-    }
-
-    /**
-     * Public method for retrieving the ID string
-     *
-     * @return the ID string
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Public method for retrieving the Type string
-     *
-     * @return the Type string
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Public method for retrieving the Data string
-     *
-     * @return the Data string
+     * @return returns a comma delineated string containing the node's data
      */
     public String getData() {
-        return data;
+        try {
+            this.data = go();
+        } catch (Exception ex) {
+            this.data = "Connection Fail";
+        }
+        return this.data;
     }
 
     /**

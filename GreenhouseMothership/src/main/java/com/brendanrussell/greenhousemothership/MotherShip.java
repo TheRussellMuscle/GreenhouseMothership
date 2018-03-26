@@ -21,18 +21,16 @@ import org.apache.http.impl.client.HttpClientBuilder;
  */
 public class MotherShip implements Runnable {
 
+    ArrayList<Node> nodes;
+    ArrayList<Node> data;
+    
     /**
-     * Declare nodes here, nodes only require a string URL, instructions for
+     * Declare node URLs here, instructions for
      * creating a node URL will be included above their initialization below.
      */
-    private final String nodeOneURL;
-    private final String nodeTwoURL;
-    private final String nodeThreeURL;
-
-    //Each Sensor should be declared here and be of type Sensor
-    private final BluetoothInterface nodeOneTemp;
-    private final BluetoothInterface nodeTwoTemp;
-    private final BluetoothInterface nodeThreeTemp;
+    private final String nodeOneBTURL;
+    private final String nodeTwoBTURL;
+    private final String nodeThreeBTURL;
 
     /**
      * Initializes the nodes and sensors
@@ -45,104 +43,43 @@ public class MotherShip implements Runnable {
          * module minus the dashes or spaces Refrence the code below to double
          * check your work
          */
-        nodeOneURL = "btspp://000666D0E48B:1;authenticate=true;"
+        nodeOneBTURL = "btspp://000666D0E48B:1;authenticate=true;"
                 + "encrypt=true;master=false";
-        nodeTwoURL = "btspp://000666D0E8C4:1;authenticate=true;"
+        nodeTwoBTURL = "btspp://000666D0E8C4:1;authenticate=true;"
                 + "encrypt=true;master=false";
-        nodeThreeURL = "btspp://000666D0E433:1;authenticate=true;"
+        nodeThreeBTURL = "btspp://000666D0E433:1;authenticate=true;"
                 + "encrypt=true;master=false";
 
         /**
-         * Here sensors are initialized To initialize a sensor include the URL
-         * of its Node, its full id, and its type
+         * Here Nodes are initialized and sensors are added. To initialize a 
+         * Node include the URL. To add a sensor, name its type.
+         * 
+         * Note: sensors will show up in the order added and be matched to 
+         * data in that same order.
          */
-        nodeOneTemp
-                = new BluetoothInterface(nodeOneURL, "a01-01", "temperature");
-        nodeTwoTemp
-                = new BluetoothInterface(nodeTwoURL, "a02-01", "temperature");
-        nodeThreeTemp
-                = new BluetoothInterface(nodeThreeURL, "a03-01", "temperature");
-
+        nodes = new ArrayList<>();
+        addNode(nodeOneBTURL);
+        addNode(nodeTwoBTURL);
+        addNode(nodeThreeBTURL);
+        
+        //Add a temperature sensor to each node
+        nodes.forEach((n) -> {
+            n.addSensor("temperature");
+        });
+        
+        data = new ArrayList<>();
+        
     }
-
-    /**
-     * Functions below written for individual nodes should be fixed so that only
-     * one function is needed
-     */
-    /**
-     * Retrieves the data from nodeOne and returns it as a string array
-     *
-     * @return All data from node one
-     */
-    private String nodeOneData() {
-        String temperature = this.nodeOneTemp.getTemp();
-        int counter = 0;
-        while (temperature.equals("Connection Fail")) {
-            counter++;
-            if (counter == 6) {
-                System.out.println("Node 1 Connection Fail, Moving On");
-                break;
-            }
-            System.out.println("Node 1 Connection Fail, Trying Again");
-            try {
-                Thread.sleep(2 * 1000);
-            } catch (InterruptedException ex) {
-                System.out.println("Sleep fail");
-            }
-            temperature = this.nodeOneTemp.getTemp();
-
+    
+    private void addNode(String URL) {
+        int nodeNum = this.nodes.size() + 1;
+        String id;
+        if (nodeNum < 10) {
+            id = "a0" + nodeNum;
+        } else {
+            id = "a" + nodeNum;
         }
-        return temperature;
-    }
-
-    /**
-     * Retrieves the data from nodeTwo and returns it as a string array
-     *
-     * @return All data from node two
-     */
-    private String nodeTwoData() {
-        String nodeTwoTemp = this.nodeTwoTemp.getTemp();
-        int counter = 0;
-        while (nodeTwoTemp.equals("Connection Fail")) {
-            counter++;
-            if (counter == 6) {
-                System.out.println("Node 2 Connection Fail, Moving On");
-                break;
-            }
-            System.out.println("Node 2 Connection Fail, Trying Again");
-            try {
-                Thread.sleep(2 * 1000);
-            } catch (InterruptedException ex) {
-                System.out.println("Sleep fail");
-            }
-            nodeTwoTemp = this.nodeTwoTemp.getTemp();
-        }
-        return nodeTwoTemp;
-    }
-
-    /**
-     * Retrieves the data from nodeThree and returns it as a string array
-     *
-     * @return All data from node three
-     */
-    private String nodeThreeData() {
-        String nodeThreeTemp = this.nodeThreeTemp.getTemp();
-        int counter = 0;
-        while (nodeThreeTemp.equals("Connection Fail")) {
-            counter++;
-            if (counter == 6) {
-                System.out.println("Node 3 Connection Fail, Moving On");
-                break;
-            }
-            System.out.println("Node 3 Connection Fail, Trying Again");
-            try {
-                Thread.sleep(2 * 1000);
-            } catch (InterruptedException ex) {
-                System.out.println("Sleep fail");
-            }
-            nodeThreeTemp = this.nodeThreeTemp.getTemp();
-        }
-        return nodeThreeTemp;
+        nodes.add(new Node(id, URL));
     }
 
     /**
@@ -150,7 +87,7 @@ public class MotherShip implements Runnable {
      *
      * @return a json formatted string ready to be sent to the server
      */
-    private String formatData(ArrayList<BluetoothInterface> nodes) {
+    private String formatData(Node[] nodes) {
 
         JSONGenerator json = new JSONGenerator(nodes);
 
@@ -205,27 +142,20 @@ public class MotherShip implements Runnable {
      */
     @Override
     public void run() {
-        //Display results
-        String[] data = new String[3];
-        data[0] = nodeOneData();
-        data[1] = nodeTwoData();
-        data[2] = nodeThreeData();
-
-        ArrayList<BluetoothInterface> nodes = new ArrayList<>();
-        int count = 0;
-        for (String d : data) {
-            if (!d.equals("Connection Fail") && count == 0) {
-                nodes.add(nodeOneTemp);
-            } else if (!d.equals("Connection Fail") && count == 1) {
-                nodes.add(nodeTwoTemp);
-            } else if (!d.equals("Connection Fail") && count == 2) {
-                nodes.add(nodeThreeTemp);
+        nodes.forEach((n) -> {
+            n.update();
+        });
+        
+        data.clear();
+        
+        nodes.forEach((n) -> {
+            if (n.isDataAvailable()) {
+                data.add(n);
+                n.resetAllSensors();
             }
-            count++;
-        }
+        });
 
-        sendData(formatData(nodes));
-        //System.out.println(formatData(data));
+        sendData(formatData((Node[])data.toArray()));
     }
 
 }
