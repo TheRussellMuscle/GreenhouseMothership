@@ -26,7 +26,6 @@ public class Application {
 			try {
 				mothership.run();
 				Thread.sleep(SECONDS * 1000);
-				System.out.println("RUN");
 			} catch (Exception e) {
 				logger.error("Exception caught in message loop processing", e);
 			}
