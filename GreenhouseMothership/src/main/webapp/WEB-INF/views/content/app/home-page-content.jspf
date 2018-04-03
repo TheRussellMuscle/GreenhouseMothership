@@ -1,0 +1,12 @@
+<h3>This is the home page.</h3>
+
+<p>This is the page that should be populated with a UI for users to
+	manage their connected devices.</p>
+<br />
+<p>There should also be some kind of flag on the controller for this
+	page that if the user has not registered the device they are prompted
+	with a form to register the motherboard. Registering the mothership
+	will also set the org_url and the secret_key. The flag on the
+	controller can just be to check if the org_url and the secret_key is
+	not blank in memory. If it is blank attempt to read the file with those
+	values and if they are still blank then prompt the user for that info</p>

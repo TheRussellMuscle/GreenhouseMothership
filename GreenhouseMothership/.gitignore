@@ -1,0 +1,5 @@
+# Eclipse Entities
+/target/
+*.classpath
+*.project
+*.prefs
