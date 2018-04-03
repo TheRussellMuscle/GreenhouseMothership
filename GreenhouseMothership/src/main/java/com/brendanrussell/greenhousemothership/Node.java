@@ -3,6 +3,8 @@
  */
 package com.brendanrussell.greenhousemothership;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 /**
@@ -87,6 +89,16 @@ public class Node {
         });
         
         dataAvailable = false;
+        return true;
+    }
+    
+    /**
+     * placeholder function
+     * @return 
+     */
+    public boolean updateDateTime() {
+        String time = ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC).toString();
+        System.out.println("time: " + time);
         return true;
     }
 
